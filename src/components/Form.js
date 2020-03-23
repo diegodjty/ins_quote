@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import styled from '@emotion/styled';
 
@@ -42,12 +42,69 @@ const Button = styled.button`
     }
 `;
 
+const Error = styled.div`
+    background-color: red;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+`;
+
 const Form = () => {
+
+
+    const [data, handelData] = useState({
+        make: '',
+        year:'',
+        plan:''
+    });
+
+    const {make,year,plan} = data;
+
+    const getData = e=>{
+        handelData({
+            ...data,
+            [e.target.name] : e.target.value
+        })
+    }
+    const [error, handelError] = useState(false);
+
+    const handelQuote = e =>{
+        e.preventDefault();
+        if(make.trim() === '' || year.trim() === '' || plan.trim() === ''){
+           handelError(true);
+           return; 
+        }
+        handelError(false);
+
+        // Get year difference
+
+        // For each year substarct a 3%
+
+        // American 15%
+        // Asian 5%
+        // European 30%
+
+        // Basic 20%
+        // Full 50%
+
+        // Total
+    }
+
     return (
-        <form>
+        <form
+            onSubmit={handelQuote} 
+        >
+            { error ? <Error>All fields are required</Error> :null}
+
             <Field>
-                <Label htmlFor=""> Make </Label>
-                <Select name="" id="">
+                <Label> Make </Label>
+                <Select
+                   name='make'
+                   value={make} 
+                   onChange={getData}
+                >
                     <option value="">--- Select ----</option>
                     <option value="American">American</option>
                     <option value="European">European</option>
@@ -56,7 +113,11 @@ const Form = () => {
             </Field>
             <Field>
                 <Label htmlFor=""> Year </Label>
-                <Select name="" id="">
+                <Select
+                    name='year'
+                    value={year} 
+                    onChange={getData}
+                >
                     <option value="">-- Seleccione --</option>
                     <option value="2021">2021</option>
                     <option value="2020">2020</option>
@@ -77,19 +138,24 @@ const Form = () => {
                     type="radio"
                     name="plan"
                     value="basic"
+                    checked={plan ==="basic"}
+                    onChange={getData}
                 /> Basic
                 <InputRadio 
                     type="radio"
                     name="plan"
                     value="full"
+                    checked={plan ==="full"}
+                    onChange={getData}
                 /> Full
                 
             </Field>
 
-            <Button type="button">Quoute</Button>
+            <Button type="submit">Quoute</Button>
             
         </form>
     )
 }
+
 
 export default Form
