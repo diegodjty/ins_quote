@@ -52,7 +52,7 @@ const Error = styled.div`
     margin-bottom: 2rem;
 `;
 
-const Form = () => {
+const Form = ({handelSummary}) => {
 
 
     const [data, handelData] = useState({
@@ -98,6 +98,11 @@ const Form = () => {
         const planIncrement = getPlan(plan)
         base = parseFloat( planIncrement * base ).toFixed(2);
         // Total
+
+        handelSummary({
+            quote: base,
+            data
+        })
     }
 
     return (
