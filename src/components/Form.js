@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {getYearDifference, calculateMake, getPlan} from '../helper'
 
 import styled from '@emotion/styled';
 
@@ -55,12 +56,14 @@ const Form = () => {
 
 
     const [data, handelData] = useState({
-        make: '',
+        make:'',
         year:'',
         plan:''
     });
-
+    const [error, handelError] = useState(false);
     const {make,year,plan} = data;
+    
+
 
     const getData = e=>{
         handelData({
@@ -68,8 +71,6 @@ const Form = () => {
             [e.target.name] : e.target.value
         })
     }
-    const [error, handelError] = useState(false);
-
     const handelQuote = e =>{
         e.preventDefault();
         if(make.trim() === '' || year.trim() === '' || plan.trim() === ''){
@@ -77,18 +78,25 @@ const Form = () => {
            return; 
         }
         handelError(false);
+        // Base price
+        let base = 2000;
 
         // Get year difference
-
+        const difference = getYearDifference(year);
+        
         // For each year substarct a 3%
+        base -= ((difference * 3) * base ) / 100;
+        console.log(base);
 
         // American 15%
         // Asian 5%
         // European 30%
+        base = calculateMake(make) * base;
 
         // Basic 20%
         // Full 50%
-
+        const planIncrement = getPlan(plan)
+        base = parseFloat( planIncrement * base ).toFixed(2);
         // Total
     }
 
