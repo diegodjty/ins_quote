@@ -1,15 +1,28 @@
-import React,{Fragment} from 'react'
+import React from 'react'
+import styled from '@emotion/styled'
+import {FirstLetterCapital} from '../helper'
 
-const Summary = () => {
+const SummaryContainer = styled.div`
+    padding: 1rem;
+    text-align: center;
+    background-color: #00838F;
+    color: #FFF;
+    margin-top: 1rem;
+`;
+
+const Summary = ({data}) => {
+
+    const {make, year, plan} = data;
+    if( make === '') return null;
     return (
-        <Fragment>
+        <SummaryContainer>
             <h2>Summary</h2>
             <ul>
-                <li>Make: </li>
-                <li>Plan: </li>
-                <li>Car Year: </li>
+                <li>Make: {FirstLetterCapital(make)}</li>
+                <li>Plan: {FirstLetterCapital(plan)}</li>
+                <li>Car Year: {FirstLetterCapital(year)}</li>
             </ul>
-        </Fragment>
+        </SummaryContainer>
     )
 }
 

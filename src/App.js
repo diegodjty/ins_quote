@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import Header from './components/Header'
 import Form from './components/Form'
 import Summary from './components/Summary'
+import Results from './components/Results'
+
 
 import styled from '@emotion/styled';
 
@@ -17,19 +19,30 @@ const FormContainer = styled.div`
 
 function App() {
 
-  const [summary, handelSummary] = useState({});
-  const { data } = summary;
-
+  const [summary, handelSummary] = useState({
+    quote: 0,
+    data: {
+      make: '',
+      year: '',
+      plan: ''
+    }
+  });
+  const { data, quote} = summary;
   return (
     <Container>
       <Header 
-        title="Insurance Quoute"
+        title="Insurance Quote"
       />
       <FormContainer>
         <Form
           handelSummary={handelSummary}
         />
-        { data ? <Summary /> :null} 
+        <Summary
+          data={data}
+        />
+        <Results
+          quote={quote}
+        />
       </FormContainer>
     </Container>
   );

@@ -62,10 +62,8 @@ const Form = ({handelSummary}) => {
     });
     const [error, handelError] = useState(false);
     const {make,year,plan} = data;
-    
 
-
-    const getData = e=>{
+    const getData = e =>{
         handelData({
             ...data,
             [e.target.name] : e.target.value
@@ -78,27 +76,22 @@ const Form = ({handelSummary}) => {
            return; 
         }
         handelError(false);
-        // Base price
-        let base = 2000;
-
-        // Get year difference
-        const difference = getYearDifference(year);
-        
-        // For each year substarct a 3%
-        base -= ((difference * 3) * base ) / 100;
-        console.log(base);
-
+        let base = 2000; // Base price
+        const difference = getYearDifference(year); // Get year difference 
+        base -= ((difference * 3) * base ) / 100; // For each year substarct a 3%
         // American 15%
         // Asian 5%
         // European 30%
+        console.log( base )
         base = calculateMake(make) * base;
-
         // Basic 20%
         // Full 50%
+        console.log( base )
         const planIncrement = getPlan(plan)
+        
         base = parseFloat( planIncrement * base ).toFixed(2);
+        
         // Total
-
         handelSummary({
             quote: base,
             data
@@ -119,9 +112,9 @@ const Form = ({handelSummary}) => {
                    onChange={getData}
                 >
                     <option value="">--- Select ----</option>
-                    <option value="American">American</option>
-                    <option value="European">European</option>
-                    <option value="Asian">Asian</option>
+                    <option value="american">American</option>
+                    <option value="european">European</option>
+                    <option value="asian">Asian</option>
                 </Select>
             </Field>
             <Field>
@@ -164,7 +157,7 @@ const Form = ({handelSummary}) => {
                 
             </Field>
 
-            <Button type="submit">Quoute</Button>
+            <Button type="submit">Quote</Button>
             
         </form>
     )
