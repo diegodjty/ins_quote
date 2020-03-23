@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled';
+import { TransitionGroup, CSSTransition} from 'react-transition-group'
 
 const Message = styled.p`
     background-color: rgb(127, 224, 237);
@@ -33,7 +34,18 @@ const Results = ({quote}) => {
         ? <Message>Select make, year and plan</Message> 
         : 
         <QouteResult>
-            <QouteText> The tolal is: $ {quote}</QouteText>
+            <TransitionGroup
+                component="p"
+                className="resultado"
+            >
+                <CSSTransition
+                    classNames='resultado'
+                    key={quote}
+                    timeout={{enter: 500, exit: 500}}
+                >
+                    <QouteText> The tolal is: $ {quote}</QouteText>
+                </CSSTransition>
+            </TransitionGroup>
         </QouteResult>
     )
 }
