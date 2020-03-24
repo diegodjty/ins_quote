@@ -52,7 +52,7 @@ const Error = styled.div`
     margin-bottom: 2rem;
 `;
 
-const Form = ({handelSummary}) => {
+const Form = ({handelSummary,handelLoading}) => {
 
 
     const [data, handelData] = useState({
@@ -82,20 +82,22 @@ const Form = ({handelSummary}) => {
         // American 15%
         // Asian 5%
         // European 30%
-        console.log( base )
         base = calculateMake(make) * base;
         // Basic 20%
         // Full 50%
-        console.log( base )
         const planIncrement = getPlan(plan)
         
         base = parseFloat( planIncrement * base ).toFixed(2);
         
-        // Total
-        handelSummary({
-            quote: base,
-            data
-        })
+        handelLoading(true)
+        setTimeout(()=>{
+            handelLoading(false)
+            handelSummary({
+                quote: base,
+                data
+            })
+        },1000)
+        
     }
 
     return (

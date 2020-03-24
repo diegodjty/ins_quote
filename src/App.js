@@ -3,6 +3,8 @@ import Header from './components/Header'
 import Form from './components/Form'
 import Summary from './components/Summary'
 import Results from './components/Results'
+import Spinner from './components/Spinner'
+
 
 
 import styled from '@emotion/styled';
@@ -27,6 +29,8 @@ function App() {
       plan: ''
     }
   });
+
+  const [loading, handelLoading] = useState(false)
   const { data, quote} = summary;
   return (
     <Container>
@@ -36,7 +40,9 @@ function App() {
       <FormContainer>
         <Form
           handelSummary={handelSummary}
+          handelLoading={handelLoading}
         />
+        { loading ? <Spinner /> : null}
         <Summary
           data={data}
         />
